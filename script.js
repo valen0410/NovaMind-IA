@@ -1,4 +1,4 @@
-function sendMessage(){
+async function sendMessage(){
 
   const input =
     document.getElementById("user-input");
@@ -21,54 +21,69 @@ function sendMessage(){
     </div>
   `;
 
-  // respuestas automáticas
-
-  let response =
-    "Gracias por tu consulta ✨";
-
-  if(message.includes("hola")){
-    response =
-      "Hola ✨ ¿Cómo puedo ayudarte?";
-  }
-
-  if(message.includes("proyectos")){
-    response =
-      "Puedes ver proyectos web y desarrollos con IA.";
-  }
-
-  if(message.includes("contacto")){
-    response =
-      "Puedes completar el formulario de contacto.";
-  }
-
-  chatBox.innerHTML += `
-    <div class="bot-message">
-      ${response}
-    </div>
-  `;
-
   input.value = "";
+
+  try{
+
+    const response = await fetch(
+      "https://router.huggingface.co/v1/chat/completions",
+      {
+
+        method: "POST",
+
+        headers: {
+
+          "Authorization":
+            "Bearer TU_TOKEN",
+
+          "Content-Type":
+            "application/json"
+
+        },
+
+        body: JSON.stringify({
+
+          model:
+            "microsoft/Phi-3-mini-4k-instruct:featherless-ai",
+
+          messages: [
+            {
+              role: "user",
+              content: message
+            }
+          ]
+
+        })
+
+      }
+    );
+
+    const data =
+      await response.json();
+
+    const botReply =
+      data.choices[0].message.content;
+
+    // respuesta IA
+
+    chatBox.innerHTML += `
+      <div class="bot-message">
+        ${botReply}
+      </div>
+    `;
+
+  }
+
+  catch(error){
+
+    chatBox.innerHTML += `
+      <div class="bot-message">
+        Error conectando con la IA 😭
+      </div>
+    `;
+
+  }
 
   chatBox.scrollTop =
     chatBox.scrollHeight;
 }
-
-// formulario contacto
-
-const form =
-  document.getElementById("contact-form");
-
-form.addEventListener("submit", function(event){
-
-  event.preventDefault();
-
-  const name =
-    document.getElementById("name").value;
-
-  document.getElementById("response").innerHTML =
-    `Gracias ${name},
-    tu mensaje fue enviado correctamente ✨`;
-
-  form.reset();
-
-});
