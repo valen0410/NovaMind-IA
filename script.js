@@ -34,7 +34,7 @@ async function sendMessage(){
         headers: {
 
           "Authorization":
-            "Bearer TU_TOKEN",
+            "Bearer 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",
 
           "Content-Type":
             "application/json"
