@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>NovaMind AI</title>
+
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+  <header>
+
+    <h1>NovaMind AI</h1>
+
+    <p>
+      Plataforma profesional de consultas inteligentes
+    </p>
+
+  </header>
+
+  <section class="hero">
+
+    <div class="hero-text">
+
+      <h2>
+        Respuestas inteligentes en tiempo real
+      </h2>
+
+      <p>
+        Plataforma desarrollada con tecnologías web
+        modernas para recibir consultas y generar
+        respuestas automáticas.
+      </p>
+
+    </div>
+
+  </section>
+
+  <section class="chat-section">
+
+    <h2>Asistente Virtual</h2>
+
+    <div id="chat-box">
+
+      <div class="bot-message">
+        Hola ✨ Soy NovaMind AI.
+        ¿En qué puedo ayudarte?
+      </div>
+
+    </div>
+
+    <div class="input-area">
+
+      <input
+        type="text"
+        id="user-input"
+        placeholder="Escribe tu consulta..."
+      >
+
+      <button onclick="sendMessage()">
+        Enviar
+      </button>
+
+    </div>
+
+  </section>
+
+  <section class="contact-section">
+
+    <h2>Contacto</h2>
+
+    <form id="contact-form">
+
+      <input
+        type="text"
+        id="name"
+        placeholder="Nombre"
+        required
+      >
+
+      <input
+        type="email"
+        id="email"
+        placeholder="Correo electrónico"
+        required
+      >
+
+      <textarea
+        id="message"
+        placeholder="Escribe tu mensaje"
+        required
+      ></textarea>
+
+      <button type="submit">
+        Enviar Mensaje
+      </button>
+
+    </form>
+
+    <div id="response"></div>
+
+  </section>
+
+  <footer>
+
+    <p>
+      © 2026 NovaMind AI
+    </p>
+
+  </footer>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
