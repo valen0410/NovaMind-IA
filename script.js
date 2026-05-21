@@ -26,7 +26,7 @@ async function sendMessage(){
   try{
 
     const response = await fetch(
-      "https://router.huggingface.co/v1/chat/completions",
+      "https://platform.openai.com/home",
       {
 
         method: "POST",
@@ -34,7 +34,7 @@ async function sendMessage(){
         headers: {
 
           "Authorization":
-            "Bearer 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",
+            "Bearer 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",
 
           "Content-Type":
             "application/json"
