@@ -86,4 +86,4 @@ document.getElementById("contact-form")
 
     this.reset();
 
-  });
+  }); 
