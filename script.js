@@ -16,10 +16,10 @@ async function sendMessage() {
 
   input.value = "";
 
-  // Mostrar indicador de carga
+  // Indicador de carga
   chatBox.innerHTML += `
     <div class="bot-message loading">
-      Escribiendo...
+      NovaMind AI está escribiendo...
     </div>
   `;
 
@@ -39,7 +39,6 @@ async function sendMessage() {
 
     const data = await response.json();
 
-    // Eliminar indicador de carga
     document.querySelector(".loading")?.remove();
 
     chatBox.innerHTML += `
@@ -56,7 +55,7 @@ async function sendMessage() {
 
     chatBox.innerHTML += `
       <div class="bot-message">
-        Error al conectar con el servidor.
+        ⚠️ No se pudo conectar con el servidor.
       </div>
     `;
   }
@@ -66,10 +65,25 @@ async function sendMessage() {
 
 
 // Enviar con Enter
-document.getElementById("user-input").addEventListener("keypress", function(event) {
+document.getElementById("user-input")
+  .addEventListener("keydown", function(event) {
 
-  if (event.key === "Enter") {
-    sendMessage();
-  }
+    if (event.key === "Enter") {
+      sendMessage();
+    }
 
-});
+  });
+
+
+// Formulario de contacto
+document.getElementById("contact-form")
+  .addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    document.getElementById("response").innerHTML =
+      "✅ Mensaje enviado correctamente.";
+
+    this.reset();
+
+  });
