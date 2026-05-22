@@ -1,20 +1,13 @@
-async function sendMessage(){
+async function sendMessage() {
 
-  const input =
-    document.getElementById("user-input");
+  const input = document.getElementById("user-input");
+  const message = input.value.trim();
 
-  const message =
-    input.value;
+  if (!message) return;
 
-  if(message === ""){
-    return;
-  }
+  const chatBox = document.getElementById("chat-box");
 
-  const chatBox =
-    document.getElementById("chat-box");
-
-  // mensaje usuario
-
+  // Mostrar mensaje del usuario
   chatBox.innerHTML += `
     <div class="user-message">
       ${message}
@@ -23,67 +16,60 @@ async function sendMessage(){
 
   input.value = "";
 
-  try{
+  // Mostrar indicador de carga
+  chatBox.innerHTML += `
+    <div class="bot-message loading">
+      Escribiendo...
+    </div>
+  `;
 
-    const response = await fetch(
-      "https://platform.openai.com/home",
-      {
+  chatBox.scrollTop = chatBox.scrollHeight;
 
-        method: "POST",
+  try {
 
-        headers: {
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: message
+      })
+    });
 
-          "Authorization":
-            "Bearer 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",
+    const data = await response.json();
 
-          "Content-Type":
-            "application/json"
-
-        },
-
-        body: JSON.stringify({
-
-          model:
-            "microsoft/Phi-3-mini-4k-instruct:featherless-ai",
-
-          messages: [
-            {
-              role: "user",
-              content: message
-            }
-          ]
-
-        })
-
-      }
-    );
-
-    const data =
-      await response.json();
-
-    const botReply =
-      data.choices[0].message.content;
-
-    // respuesta IA
+    // Eliminar indicador de carga
+    document.querySelector(".loading")?.remove();
 
     chatBox.innerHTML += `
       <div class="bot-message">
-        ${botReply}
+        ${data.reply}
       </div>
     `;
 
-  }
+  } catch (error) {
 
-  catch(error){
+    console.error(error);
+
+    document.querySelector(".loading")?.remove();
 
     chatBox.innerHTML += `
       <div class="bot-message">
-        Error conectando con la IA 😭
+        Error al conectar con el servidor.
       </div>
     `;
-
   }
 
-  chatBox.scrollTop =
-    chatBox.scrollHeight;
+  chatBox.scrollTop = chatBox.scrollHeight;
 }
+
+
+// Enviar con Enter
+document.getElementById("user-input").addEventListener("keypress", function(event) {
+
+  if (event.key === "Enter") {
+    sendMessage();
+  }
+
+});
